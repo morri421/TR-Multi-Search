@@ -8,6 +8,8 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
+import logtracker.LogCreation;
+
 public class GuiCreation implements ActionListener, ItemListener {
 
     JFrame frame;
@@ -190,16 +192,22 @@ public class GuiCreation implements ActionListener, ItemListener {
         //    return;
         //} else {
 		textArea.setText("");
+		
 		// Reads what filters are checkboxed and returns string
 		FilterCreation setFilters= new FilterCreation();
 		String[] filterAlertString = setFilters.returnFilterURL(filterStates);
+		
 		//Creates URLs using the filter information
 		URLGenerator urlCreator = new URLGenerator();
 		ArrayList<String> formatedURLS = urlCreator.createURLS(tempInput, filterAlertString);
+		
 		//Opens all processes selected as resources with filtered information
 		OpenResource resources = new OpenResource();
 		resources.createProcess(formatedURLS, resourceStates, filterAlertString, filterStates);
-		//} 
+		
+		//Creates record of searches and dates
+		LogCreation record = new LogCreation();
+		record.createLog(tempInput);
 		
 	}
 }
