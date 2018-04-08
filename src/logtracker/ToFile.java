@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 
 public class ToFile {
 
-	public void writeToLog(Object[] temp, String searchInput) {
+	public void writeToLog(Object[] temp, String searchInput, String uDrive) {
 		
 		File file = new File("TRIMlogfile.txt");
 		//creates file if it doesn't exist
@@ -15,7 +15,7 @@ public class ToFile {
 			try {
 				file.createNewFile();
 				FileWriter writer = new FileWriter(file);
-				writer.append(searchInput + "//" + temp[0].toString() + "//" + temp[1].toString()); 
+				writer.append(searchInput + "//" + temp[0].toString() + "//" + temp[1].toString() + "//" + uDrive); 
 				writer.flush();
 			    writer.close();
 			} catch (Exception e) {
@@ -29,7 +29,7 @@ public class ToFile {
 				BufferedWriter bw = new BufferedWriter(writer);
 				PrintWriter out = new PrintWriter(bw);
 				bw.newLine();
-				out.write(searchInput + "//" + temp[0].toString() + "//" + temp[1].toString()); 
+				out.write(searchInput + "//" + temp[0].toString() + "//" + temp[1].toString() + "//" + uDrive); 
 				out.flush();
 			    out.close();
 				

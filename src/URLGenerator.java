@@ -1,5 +1,8 @@
 
 import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
+
+
 
 public class URLGenerator {
 	
@@ -31,9 +34,19 @@ public class URLGenerator {
 		}
 		
 		//Creates TFS URL as string
-		String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" + newBasePromptTFS + "&_a=search";
-		newAddresses.add(newTFSPrompt);
+		StringUtils checkString = new StringUtils();
+		if (checkString.isNumeric(textAreaPrompt)) {
+			
+			String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" + newBasePromptTFS + "&_a=edit&id=" + textAreaPrompt;
+			newAddresses.add(newTFSPrompt);
+
+			
+		} else {
 		
+			String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" + newBasePromptTFS + "&_a=search";
+			newAddresses.add(newTFSPrompt);
+		
+		}
 		//Stores string without conjuctions for Q-Logs
 		newAddresses.add(noconTFS);
 		
