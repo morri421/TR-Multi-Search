@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ActionListener;
@@ -5,7 +6,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Map;
+
 import javax.swing.*;
 
 import logtracker.LogCreation;
@@ -22,13 +26,13 @@ public class GuiCreation implements ActionListener, ItemListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setLayout(new BorderLayout()); Add all elements to one panel to recreate
         //frame.setLayout(new GridBagLayout());
-        frame.setLayout(new MigLayout());
+        frame.setLayout(new MigLayout("gapx 10"));
         frame.setTitle("Thomson Reuters Internal Multi-Search Tool");
-        frame.setSize(355, 525);
+        frame.setSize(360, 525);
         
         JPanel panel = new JPanel();
        
-        textArea = new JTextArea(3,20);
+        textArea = new JTextArea(3,22);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         panel.add(textArea);
@@ -57,12 +61,19 @@ public class GuiCreation implements ActionListener, ItemListener {
         frame.getContentPane().add(panel, "span 2");
         
         //Labels for Checkboxes  
-        JLabel resourceLabel = new JLabel("-Resource Selection-");
+        JLabel resourceLabel = new JLabel("Resource Selection");
+        Font resourcefont = resourceLabel.getFont();
+        Map attributes = resourcefont.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        resourceLabel.setFont(resourcefont.deriveFont(attributes));
         frame.add(resourceLabel, "cell 0 1");
         
-        JLabel filterLabel = new JLabel("-Filter Selection-");
+        JLabel filterLabel = new JLabel("Filter Selection");
+        Font filterfont = filterLabel.getFont();
+        Map filattributes = filterfont.getAttributes();
+        filattributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        filterLabel.setFont(filterfont.deriveFont(filattributes));
         frame.add(filterLabel);
-      
 
         //Resource Checkboxes 
         JCheckBox qlogs = new JCheckBox("Q-Logs");
@@ -120,13 +131,12 @@ public class GuiCreation implements ActionListener, ItemListener {
         adflow.addItemListener(this);
         frame.add(adflow, "cell 1 8");
         
-        //Tax Filter Titles //Possibly put Titles in a jpanel
-        
-        JLabel extraLabel = new JLabel("-Extra Features-");
+        JLabel extraLabel = new JLabel("Extra Features");
+        Font extrafont = extraLabel.getFont();
+        Map extraattributes = extrafont.getAttributes();
+        extraattributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        extraLabel.setFont(extrafont.deriveFont(extraattributes));
         frame.add(extraLabel, "cell 0 9");
-        
-        //taxLabel = new JLabel("-Tax Filter Selection-");
-        //frame.add(taxLabel);
         
         JCheckBox fcabinet = new JCheckBox("File Cabinet");
         fcabinet.setSelected(false);
@@ -183,7 +193,7 @@ public class GuiCreation implements ActionListener, ItemListener {
     	filterStates = tempArray[1];
     }
     
-    Boolean test = true;
+    //Boolean test = true;
 	@Override
 	public void actionPerformed(ActionEvent actionE) {
 		//Saves current text and removes it from the text area

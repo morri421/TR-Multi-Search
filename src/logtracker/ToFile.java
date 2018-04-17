@@ -9,7 +9,7 @@ public class ToFile {
 
 	public void writeToLog(Object[] temp, String searchInput, String uDrive) {
 		
-		File file = new File("TRIMlogfile.txt");
+		File file = new File("DO_NOT_DELETE_TRIMlog.txt");
 		//creates file if it doesn't exist
 		if (!file.exists()) {
 			try {
