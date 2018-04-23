@@ -116,6 +116,11 @@ public class GuiCreation implements ActionListener, ItemListener {
         web.addItemListener(this);
         frame.add(web);
         
+        JCheckBox qtoggle = new JCheckBox("Tax TFS Queries");
+        qtoggle.setSelected(false);
+        qtoggle.addItemListener(this);
+        frame.add(qtoggle, "cell 0 6");
+        
         JCheckBox csa = new JCheckBox("Creative Solutions Accounting");
         csa.setSelected(false);
         csa.addItemListener(this);
@@ -131,7 +136,7 @@ public class GuiCreation implements ActionListener, ItemListener {
         adflow.addItemListener(this);
         frame.add(adflow, "cell 1 8");
         
-        JLabel extraLabel = new JLabel("Extra Features");
+        JLabel extraLabel = new JLabel("UltraTax TFS Query");
         Font extrafont = extraLabel.getFont();
         Map extraattributes = extrafont.getAttributes();
         extraattributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
@@ -143,25 +148,80 @@ public class GuiCreation implements ActionListener, ItemListener {
         fcabinet.addItemListener(this);
         frame.add(fcabinet);
         
+        
+        
+        //Tax TFS 
+        
+        String [] tfsQStorage = {"", "", ""};
+        		
+        
+        String[] taxStrings = {"", "1040", "1041", "1065", "1120", "2290", "5500", "706", "709", "990", "Platform", "Conversion"};
+        JComboBox<String> tax = new JComboBox<String>(taxStrings);
+        tax.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				tfsQStorage[0] = e.getItem().toString();
+			}
+        });
+        frame.add(tax, "cell 0 10");
+        
+        String[] jStrings = {"","FED", "ORG", "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GL", 
+        		"GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MI CTY", 
+        		"MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OH CTY",
+        		"OK", "OR", "PA", "RI", "SC", "TN", "UT", "VA", "VT", "WI", 
+        		"WV"
+        		};
+        JComboBox<String> jurisdiction = new JComboBox<String>(jStrings);
+        jurisdiction.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				tfsQStorage[1] = e.getItem().toString();
+			}
+        });
+        frame.add(jurisdiction, "cell 0 10");
+        
+        JLabel meLabel = new JLabel("Tax Multi-Entity TFS Query");
+        Font mefont = meLabel.getFont();
+        Map meattributes = mefont.getAttributes();
+        meattributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        meLabel.setFont(mefont.deriveFont(meattributes));
+        frame.add(meLabel, "cell 0 11");
+        
+        String[] meStrings = {"", "CA PPT", "DC PPT", "FL PPT", "GA PPT", "IN PPT", "KY PPT", "MBT", "MD PPT", "MI MBT", "MI PPT", 
+        		"NC PPT", "NE PPT", "NV", "OH CAT", "PR PPT", "SC PPT", "TX", "TX PPT", "VA PPT", "WI PPT"
+        		};
+        JComboBox<String> me = new JComboBox<String>(meStrings);
+        me.addItemListener(new ItemListener() {
+			
+        	@Override
+			public void itemStateChanged(ItemEvent e) {
+        		tfsQStorage[2] = e.getItem().toString();
+			}
+        });
+        frame.add(me, "cell 0 12");
+        
+        
+        
+        
         JCheckBox gofileroom = new JCheckBox("GoFileRoom");
         gofileroom.setSelected(false);
         gofileroom.addItemListener(this);
         frame.add(gofileroom, "cell 1 10");
         
-        JCheckBox ut2015 = new JCheckBox("2015 UltraTax");
-        ut2015.setSelected(false);
-        ut2015.addItemListener(this);
-        frame.add(ut2015, "cell 1 11");
+        JCheckBox ut2017 = new JCheckBox("2017 UltraTax");
+        ut2017.setSelected(false);
+        ut2017.addItemListener(this);
+        frame.add(ut2017, "cell 1 11");
         
         JCheckBox ut2016 = new JCheckBox("2016 UltraTax");
         ut2016.setSelected(false);
         ut2016.addItemListener(this);
         frame.add(ut2016, "cell 1 12");
         
-        JCheckBox ut2017 = new JCheckBox("2017 UltraTax");
-        ut2017.setSelected(false);
-        ut2017.addItemListener(this);
-        frame.add(ut2017, "cell 1 13");
+        JCheckBox ut2015 = new JCheckBox("2015 UltraTax");
+        ut2015.setSelected(false);
+        ut2015.addItemListener(this);
+        frame.add(ut2015, "cell 1 13");
         
         JCheckBox fixedassets = new JCheckBox("Fixed Assets");
         fixedassets.setSelected(false);
@@ -206,6 +266,11 @@ public class GuiCreation implements ActionListener, ItemListener {
 		// Reads what filters are checkboxed and returns string
 		FilterCreation setFilters= new FilterCreation();
 		String[] filterAlertString = setFilters.returnFilterURL(filterStates);
+		
+		//Reads the tfs query section and returns a string
+		QueryChecker querycheck = new QueryChecker();
+		TFSTaxQuery createTFSURL = new TFSTaxQuery();
+		
 		
 		//Creates URLs using the filter information
 		URLGenerator urlCreator = new URLGenerator();

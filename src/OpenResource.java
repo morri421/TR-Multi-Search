@@ -13,6 +13,11 @@ public class OpenResource {
 					
 					ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Q-Logs\\Q-Logs.exe", "qlogs://search=" + newURLS.get(2));
 					pb.start();
+					//pb.command("C:\\Program Files (x86)\\Q-Logs\\Q-Logs.exe", "qlogs://search=" + "hi");
+					//pb.start();
+					//Attempt to put in logic to use the same process
+					//Runtime run  = Runtime.getRuntime();
+		            //Process proc = run.exec("qlogs://search=");
 			
 				} catch (IOException e) {
 					e.printStackTrace();
