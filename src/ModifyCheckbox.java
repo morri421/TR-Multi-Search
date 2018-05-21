@@ -57,13 +57,13 @@ public class ModifyCheckbox {
 			ArrayList[] returnLists = {tempResList, tempFilList};
 			return returnLists;
 		
-		} else if (name == "Tax TFS Queries" && state == 1) {
+		} else if (name == "Toggle TFS Queries" && state == 1) {
 			
 			tempResList.add("TFSQS");
 			ArrayList[] returnLists = {tempResList, tempFilList};
 			return returnLists;
 		
-		} else if (name == "Tax TFS Queries" && state == 2) {
+		} else if (name == "Toggle TFS Queries" && state == 2) {
 			
 			tempResList.remove("TFSQS");
 			ArrayList[] returnLists = {tempResList, tempFilList};

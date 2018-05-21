@@ -13,12 +13,7 @@ public class OpenResource {
 					
 					ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Q-Logs\\Q-Logs.exe", "qlogs://search=" + newURLS.get(2));
 					pb.start();
-					//pb.command("C:\\Program Files (x86)\\Q-Logs\\Q-Logs.exe", "qlogs://search=" + "hi");
-					//pb.start();
-					//Attempt to put in logic to use the same process
-					//Runtime run  = Runtime.getRuntime();
-		            //Process proc = run.exec("qlogs://search=");
-			
+				
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -36,7 +31,7 @@ public class OpenResource {
 		} if (resourceState.contains("TFS")  && !filterStates.isEmpty()) {
 			
 				try {
-					ProcessBuilder pb = new ProcessBuilder(chromeProcess, ""+newURLS.get(1)+"");
+					ProcessBuilder pb = new ProcessBuilder(chromeProcess, newURLS.get(1));
 					pb.start();
 				} catch (IOException e) {
 					e.printStackTrace();

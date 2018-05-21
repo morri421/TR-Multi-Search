@@ -28,7 +28,7 @@ public class GuiCreation implements ActionListener, ItemListener {
         //frame.setLayout(new GridBagLayout());
         frame.setLayout(new MigLayout("gapx 10"));
         frame.setTitle("Thomson Reuters Internal Multi-Search Tool");
-        frame.setSize(360, 525);
+        frame.setSize(395, 525);
         
         JPanel panel = new JPanel();
        
@@ -116,10 +116,10 @@ public class GuiCreation implements ActionListener, ItemListener {
         web.addItemListener(this);
         frame.add(web);
         
-        JCheckBox qtoggle = new JCheckBox("Tax TFS Queries");
+        JCheckBox qtoggle = new JCheckBox("Toggle TFS Queries");
         qtoggle.setSelected(false);
         qtoggle.addItemListener(this);
-        frame.add(qtoggle, "cell 0 6");
+        frame.add(qtoggle, "cell 0 8");
         
         JCheckBox csa = new JCheckBox("Creative Solutions Accounting");
         csa.setSelected(false);
@@ -151,11 +151,7 @@ public class GuiCreation implements ActionListener, ItemListener {
         
         
         //Tax TFS 
-        
-        String [] tfsQStorage = {"", "", ""};
-        		
-        
-        String[] taxStrings = {"", "1040", "1041", "1065", "1120", "2290", "5500", "706", "709", "990", "Platform", "Conversion"};
+        String[] taxStrings = {"1040", "1041", "1065", "1120", "2290", "5500", "706", "709", "990", "Platform", "Conversion"};
         JComboBox<String> tax = new JComboBox<String>(taxStrings);
         tax.addItemListener(new ItemListener() {
 			@Override
@@ -180,25 +176,25 @@ public class GuiCreation implements ActionListener, ItemListener {
         });
         frame.add(jurisdiction, "cell 0 10");
         
-        JLabel meLabel = new JLabel("Tax Multi-Entity TFS Query");
-        Font mefont = meLabel.getFont();
-        Map meattributes = mefont.getAttributes();
-        meattributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        meLabel.setFont(mefont.deriveFont(meattributes));
-        frame.add(meLabel, "cell 0 11");
+     //   JLabel meLabel = new JLabel("Tax Multi-Entity TFS Query");
+     //   Font mefont = meLabel.getFont();
+     //   Map meattributes = mefont.getAttributes();
+     //   meattributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+     ///   meLabel.setFont(mefont.deriveFont(meattributes));
+     //   frame.add(meLabel, "cell 0 11");
         
-        String[] meStrings = {"", "CA PPT", "DC PPT", "FL PPT", "GA PPT", "IN PPT", "KY PPT", "MBT", "MD PPT", "MI MBT", "MI PPT", 
-        		"NC PPT", "NE PPT", "NV", "OH CAT", "PR PPT", "SC PPT", "TX", "TX PPT", "VA PPT", "WI PPT"
-        		};
-        JComboBox<String> me = new JComboBox<String>(meStrings);
-        me.addItemListener(new ItemListener() {
+       // String[] meStrings = {"", "CA PPT", "DC PPT", "FL PPT", "GA PPT", "IN PPT", "KY PPT", "MBT", "MD PPT", "MI MBT", "MI PPT", 
+        //		"NC PPT", "NE PPT", "NV", "OH CAT", "PR PPT", "SC PPT", "TX", "TX PPT", "VA PPT", "WI PPT"
+        //		};
+      //  JComboBox<String> me = new JComboBox<String>(meStrings);
+      //  me.addItemListener(new ItemListener() {
 			
-        	@Override
-			public void itemStateChanged(ItemEvent e) {
-        		tfsQStorage[2] = e.getItem().toString();
-			}
-        });
-        frame.add(me, "cell 0 12");
+      //  	@Override
+	//		public void itemStateChanged(ItemEvent e) {
+     //   		tfsQStorage[2] = e.getItem().toString();
+	//		}
+   //     });
+     //   frame.add(me, "cell 0 12");
         
         
         
@@ -237,15 +233,17 @@ public class GuiCreation implements ActionListener, ItemListener {
 
     }
     
-    //This array holds all the checkbox reference data
+    //These arrays holds all the checkbox reference data and the ComboxBox items
     ArrayList<String> resourceStates = new ArrayList<String>();
     ArrayList<String> filterStates = new ArrayList<String>();
+    String [] tfsQStorage = {"1040", "", ""};
+    String [] temp = {"", ""};
 
     public void itemStateChanged(ItemEvent checkE) {
     	//gets the state of the clicked box
     	int checkboxnewstate = checkE.getStateChange();
     	//gets the name of the clicked box
-    	String  checkboxname= ((JCheckBox) checkE.getItem()).getText();
+    	String checkboxname= ((JCheckBox) checkE.getItem()).getText();
     	//adds or removes the checkbox from the list
     	ModifyCheckbox sentVars = new ModifyCheckbox();
     	ArrayList<String>[] tempArray = sentVars.returnResource(resourceStates, filterStates, checkboxnewstate, checkboxname);
@@ -258,9 +256,6 @@ public class GuiCreation implements ActionListener, ItemListener {
 	public void actionPerformed(ActionEvent actionE) {
 		//Saves current text and removes it from the text area
 		String tempInput = textArea.getText().trim();
-		//if ((tempInput == null) || (tempInput.length() == 0)) {
-        //    return;
-        //} else {
 		textArea.setText("");
 		
 		// Reads what filters are checkboxed and returns string
@@ -268,17 +263,19 @@ public class GuiCreation implements ActionListener, ItemListener {
 		String[] filterAlertString = setFilters.returnFilterURL(filterStates);
 		
 		//Reads the tfs query section and returns a string
-		QueryChecker querycheck = new QueryChecker();
-		TFSTaxQuery createTFSURL = new TFSTaxQuery();
-		
+		if (resourceStates.contains("TFSQS")) {
+			TFSTaxQuery createTFSURL = new TFSTaxQuery();
+			temp = createTFSURL.returnTFSAddition(tfsQStorage);
+		}
 		
 		//Creates URLs using the filter information
 		URLGenerator urlCreator = new URLGenerator();
-		ArrayList<String> formatedURLS = urlCreator.createURLS(tempInput, filterAlertString);
+		ArrayList<String> formatedURLS = urlCreator.createURLS(tempInput, filterAlertString, filterStates, temp, resourceStates);
 		
 		//Opens all processes selected as resources with filtered information
 		OpenResource resources = new OpenResource();
 		resources.createProcess(formatedURLS, resourceStates, filterAlertString, filterStates);
+		
 		
 		//Creates record of searches and dates
 		LogCreation record = new LogCreation();

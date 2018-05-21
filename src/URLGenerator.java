@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class URLGenerator {
 	
-	public ArrayList<String> createURLS(String textAreaPrompt, String[] filterAlertString) {
+	public ArrayList<String> createURLS(String textAreaPrompt, String[] filterAlertString, ArrayList<String> filterStates, String[] queryStrings, ArrayList<String> resources) {
 		
 		ArrayList<String> newAddresses = new ArrayList<String>();
 		
@@ -42,14 +42,32 @@ public class URLGenerator {
 
 			
 		} else {
-		
-			String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" + newBasePromptTFS + "&_a=search";
-			newAddresses.add(newTFSPrompt);
+			
+			if (filterStates.contains("FIAS") && textAreaPrompt != "") {
+				
+				String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" 
+				+ "%22Area%20Path%22%3A%22CSTaxSupport" + "\\" + "Fixed Assets%22" + "%20" + newBasePromptTFS + "&_a=search";
+				newAddresses.add(newTFSPrompt);
+				
+			} else if (filterStates.contains("PLAN") && textAreaPrompt != "") {
+				
+				String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" 
+				+ "\"%22Area%20Path%22%3ACSTaxSupport" + "\\" + "Toolbox_PlannerCS" + "\"" + "%20" + newBasePromptTFS + "&_a=search";
+				newAddresses.add(newTFSPrompt);
+				
+			} else {
+				if (resources.contains("TFSQS")) { //&& queryStrings[0] != "blank") {
+					String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" + queryStrings[0].toString() + "%20" + newBasePromptTFS + "&_a=search";
+					newAddresses.add(newTFSPrompt);
+				} else { //
+					String newTFSPrompt = "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/" + filterAlertString[2] + "/_workItems?path=Search%20results&searchText=" + newBasePromptTFS + "&_a=search";
+					newAddresses.add(newTFSPrompt);
+				}
+			}
 		
 		}
 		//Stores string without conjuctions for Q-Logs
 		newAddresses.add(noconTFS);
-		
 		return newAddresses;
 	}
 	
