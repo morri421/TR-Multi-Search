@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Checkbox States</comment>
+<entry key="17ut">0</entry>
+<entry key="plan">0</entry>
+<entry key="web">0</entry>
+<entry key="cs">0</entry>
+<entry key="gfr">0</entry>
+<entry key="hhtc">0</entry>
+<entry key="tfs">0</entry>
+<entry key="16ut">0</entry>
+<entry key="alerts">0</entry>
+<entry key="fc">0</entry>
+<entry key="18ut">0</entry>
+<entry key="fa">0</entry>
+<entry key="work">0</entry>
+<entry key="prac">0</entry>
+<entry key="qlogs">0</entry>
+<entry key="af">0</entry>
+<entry key="csa">0</entry>
+<entry key="acsca">0</entry>
+<entry key="acs">0</entry>
+<entry key="15ut">0</entry>
+</properties>
